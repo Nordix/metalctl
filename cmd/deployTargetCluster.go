@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Kubernetes Authors.
+Copyright © 2020 NAME HERE <EMAIL ADDRESS>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,19 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-func NewDeleteCommand() *cobra.Command {
-	deleteCmd := &cobra.Command{
-		Use:   "delete providers",
-		Short: "Deletes one or more providers from the management cluster",
-		Long: LongDesc(`
-			Deletes one or more providers from the management cluster.`),
+// NewDeployTargetClusterCmd represents the deployTargetCluster command
+func NewDeployTargetClusterCmd() *cobra.Command {
+	deployTargetClusterCmd := &cobra.Command{
+		Use:   "deployTargetCluster",
+		Args:  cobra.ExactArgs(2),
+		Short: "Deploy target cluster CRs",
+		Long:  `Deploy target cluster CRs, path to management cluster kubeconfig and CR manifests needed as input`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("deployTargetCluster called")
+		},
 	}
-	return deleteCmd
+	return deployTargetClusterCmd
 }

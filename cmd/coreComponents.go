@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Kubernetes Authors.
+Copyright © 2020 NAME HERE <EMAIL ADDRESS>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,19 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-func NewDeleteCommand() *cobra.Command {
-	deleteCmd := &cobra.Command{
-		Use:   "delete providers",
-		Short: "Deletes one or more providers from the management cluster",
-		Long: LongDesc(`
-			Deletes one or more providers from the management cluster.`),
+// coreComponentsCmd represents the coreComponents command
+func NewCoreComponentsCommand() *cobra.Command {
+	coreComponentsCmd := &cobra.Command{
+		Use:   "coreComponents",
+		Short: "Deploy CAPIand CAPBPK components to management cluster",
+		Long:  `Deploy CAPI components to management cluster, path to management cluster kubeconfig and CAPI manifests needed as input`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("coreComponents called")
+		},
 	}
-	return deleteCmd
+	return coreComponentsCmd
 }
