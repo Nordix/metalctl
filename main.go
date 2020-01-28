@@ -18,9 +18,19 @@ package main
 
 import (
 	//"sigs.k8s.io/cluster-api/cmd/clusterctl/cmd"
+	"fmt"
 	"metalctl/cmd"
+	"os"
 )
 
 func main() {
-	cmd.Execute()
+	rootCmd, err := cmd.NewMetalCTLCommand(os.Stdout)
+	if err != nil {
+		fmt.Fprintln(os.Stdout, err)
+		os.Exit(1)
+	}
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stdout, err)
+		os.Exit(1)
+	}
 }

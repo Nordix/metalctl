@@ -21,16 +21,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// deployCmd represents the deploy command
-var deployCmd = &cobra.Command{
-	Use:   "deploy",
-	Short: "Parent command for provider component and workload cluster deployments",
-	Long: `Parent command for provider component and workload cluster deployments`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("deploy called")
-	},
-}
-
-func init() {
-	RootCmd.AddCommand(deployCmd)
+func NewDeployCommand() *cobra.Command {
+	deployCmd := &cobra.Command{
+		Use:   "deploy",
+		Short: "Parent command for provider component and workload cluster deployments",
+		Long:  `Parent command for provider component and workload cluster deployments`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("deploy called")
+		},
+	}
+	return deployCmd
 }

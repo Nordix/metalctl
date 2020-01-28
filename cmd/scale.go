@@ -25,12 +25,12 @@ import (
 var scaleCmd = &cobra.Command{
 	Use:   "scale",
 	Short: "TODO",
-	Long: `TODO`,
+	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("scale called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(scaleCmd)
+	//RootCmd.AddCommand(scaleCmd)
 }

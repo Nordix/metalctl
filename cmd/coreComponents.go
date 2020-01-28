@@ -22,16 +22,14 @@ import (
 )
 
 // coreComponentsCmd represents the coreComponents command
-var coreComponentsCmd = &cobra.Command{
-	Use:   "coreComponents",
-	Args:  cobra.ExactArgs(2),
-	Short: "Deploy CAPIand CAPBPK components to management cluster",
-	Long: `Deploy CAPI components to management cluster, path to management cluster kubeconfig and CAPI manifests needed as input`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("coreComponents called")
-	},
-}
-
-func init() {
-	deployCmd.AddCommand(coreComponentsCmd)
+func NewCoreComponentsCommand() *cobra.Command {
+	coreComponentsCmd := &cobra.Command{
+		Use:   "coreComponents",
+		Short: "Deploy CAPIand CAPBPK components to management cluster",
+		Long:  `Deploy CAPI components to management cluster, path to management cluster kubeconfig and CAPI manifests needed as input`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("coreComponents called")
+		},
+	}
+	return coreComponentsCmd
 }

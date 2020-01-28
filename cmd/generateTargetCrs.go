@@ -22,7 +22,7 @@ import (
 )
 
 type generateOptions struct {
-	configPath              string
+	configPath string
 }
 
 var gi = &generateOptions{}
@@ -32,13 +32,8 @@ var generateTargetCrsCmd = &cobra.Command{
 	Use:   "generateTargetCrs",
 	Args:  cobra.ExactArgs(1),
 	Short: "Generates target CRs",
-	Long: `Generates target CRs by rendering kustomization templates, input is path to the template folder`,
+	Long:  `Generates target CRs by rendering kustomization templates, input is path to the template folder`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("generateTargetCrs called")
 	},
-}
-
-func init() {
-	generateTargetCrsCmd.Flags().StringVarP(&gi.configPath, "config-path", "", "", "Path to the CRs")
-	RootCmd.AddCommand(generateTargetCrsCmd)
 }

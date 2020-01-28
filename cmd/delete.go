@@ -17,68 +17,15 @@ limitations under the License.
 package cmd
 
 import (
-	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client"
 )
 
-type deleteOptions struct {
-	kubeconfig           string
-	targetNamespace      string
-	forceDeleteNamespace bool
-	forceDeleteCRD       bool
-	deleteAll            bool
-}
-
-var dd = &deleteOptions{}
-
-var deleteCmd = &cobra.Command{
-	Use:   "delete providers",
-	Short: "Deletes one or more providers from the management cluster",
-	Long: LongDesc(`
-		Deletes one or more providers from the management cluster.`),
-
-	Example: Examples(``),
-
-	RunE: func(cmd *cobra.Command, args []string) error {
-		if dd.deleteAll && len(args) > 0 {
-			return errors.New("The --all flag can't be used in combination with the list of providers")
-		}
-
-		if !dd.deleteAll && len(args) == 0 {
-			return errors.New("At least one provider should be specified or the --all flag should be set")
-		}
-
-		return runDelete(args)
-	},
-}
-
-func init() {
-	deleteCmd.Flags().StringVarP(&dd.kubeconfig, "kubeconfig", "", "", "Path to the kubeconfig file")
-	deleteCmd.Flags().StringVarP(&dd.targetNamespace, "namespace", "", "", "The namespace where the provider to be deleted lives. If not specified, the namespace name will be inferred from the current configuration")
-
-	deleteCmd.Flags().BoolVarP(&dd.forceDeleteNamespace, "delete-namespace", "n", false, "Forces the deletion of the namespace where the providers are hosted (and of all the contained objects)")
-	deleteCmd.Flags().BoolVarP(&dd.forceDeleteCRD, "delete-crd", "c", false, "Forces the deletion of the provider's CRDs (and of all the related objects)")
-	deleteCmd.Flags().BoolVarP(&dd.deleteAll, "all", "", false, "Force deletion of all the providers")
-
-	RootCmd.AddCommand(deleteCmd)
-}
-
-func runDelete(args []string) error {
-	c, err := client.New(cfgFile)
-	if err != nil {
-		return err
+func NewDeleteCommand() *cobra.Command {
+	deleteCmd := &cobra.Command{
+		Use:   "delete providers",
+		Short: "Deletes one or more providers from the management cluster",
+		Long: LongDesc(`
+			Deletes one or more providers from the management cluster.`),
 	}
-
-	if err := c.Delete(client.DeleteOptions{
-		Kubeconfig:           dd.kubeconfig,
-		ForceDeleteNamespace: dd.forceDeleteNamespace,
-		ForceDeleteCRD:       dd.forceDeleteCRD,
-		Namespace:            dd.targetNamespace,
-		Providers:            args,
-	}); err != nil {
-		return err
-	}
-
-	return nil
+	return deleteCmd
 }

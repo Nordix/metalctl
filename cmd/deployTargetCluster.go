@@ -21,17 +21,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// deployTargetClusterCmd represents the deployTargetCluster command
-var deployTargetClusterCmd = &cobra.Command{
-	Use:   "deployTargetCluster",
-	Args:  cobra.ExactArgs(2),
-	Short: "Deploy target cluster CRs",
-	Long: `Deploy target cluster CRs, path to management cluster kubeconfig and CR manifests needed as input`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("deployTargetCluster called")
-	},
-}
-
-func init() {
-	RootCmd.AddCommand(deployTargetClusterCmd)
+// NewDeployTargetClusterCmd represents the deployTargetCluster command
+func NewDeployTargetClusterCmd() *cobra.Command {
+	deployTargetClusterCmd := &cobra.Command{
+		Use:   "deployTargetCluster",
+		Args:  cobra.ExactArgs(2),
+		Short: "Deploy target cluster CRs",
+		Long:  `Deploy target cluster CRs, path to management cluster kubeconfig and CR manifests needed as input`,
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println("deployTargetCluster called")
+		},
+	}
+	return deployTargetClusterCmd
 }

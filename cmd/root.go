@@ -17,58 +17,45 @@ limitations under the License.
 package cmd
 
 import (
-	"flag"
-	"os"
+	"io"
 	"strings"
 
 	"github.com/MakeNowJust/heredoc"
 	"github.com/spf13/cobra"
-	"k8s.io/klog"
 )
 
 var cfgFile string
 
-var RootCmd = &cobra.Command{
-	Use:          "metalctl",
-	SilenceUsage: true,
-	Short:        "metalctl controls a management cluster and move to target cluster",
-	Long: LongDesc(`
-		Get started with Cluster API using metalctl for initializing a management cluster by installing
-		CAPI+CAPBM+BMO  providers, and then use clusterctl for creating yaml templates for your workload clusters
-		ande deploy them. After that pivot from management cluster to targer cluster`),
+// NewMetalCTLCommand creates a root `metalctl` command with the default commands attached
+func NewMetalCTLCommand(out io.Writer) (*cobra.Command, error) {
+	rootCmd, err := NewRootCmd(out)
+	return AddDefaultMetalCTLCommands(rootCmd), err
 }
 
-func Execute() {
-	if err := RootCmd.Execute(); err != nil {
-		os.Exit(1)
+func NewRootCmd(out io.Writer) (*cobra.Command, error) {
+	rootCmd := &cobra.Command{
+		Use:          "metalctl",
+		SilenceUsage: true,
+		Short:        "metalctl controls a management cluster and move to target cluster",
+		Long: LongDesc(`
+			Get started with Cluster API using metalctl for initializing a management cluster by installing
+			CAPI+CAPBM+BMO  providers, and then use clusterctl for creating yaml templates for your workload clusters
+			ande deploy them. After that pivot from management cluster to targer cluster`),
 	}
+	return rootCmd, nil
 }
 
-func init() {
-
-	klog.InitFlags(flag.CommandLine)
-	RootCmd.PersistentFlags().AddGoFlagSet(flag.CommandLine)
-
-	// hiding all the klog flags except
-	// --log_dir
-	// --log_file
-	// --log_file_max_size
-	// -v, --v Level
-
-	_ = RootCmd.PersistentFlags().MarkHidden("alsologtostderr")
-	_ = RootCmd.PersistentFlags().MarkHidden("log_backtrace_at")
-	_ = RootCmd.PersistentFlags().MarkHidden("logtostderr")
-	_ = RootCmd.PersistentFlags().MarkHidden("stderrthreshold")
-	_ = RootCmd.PersistentFlags().MarkHidden("vmodule")
-	_ = RootCmd.PersistentFlags().MarkHidden("skip_log_headers")
-	_ = RootCmd.PersistentFlags().MarkHidden("skip_headers")
-	_ = RootCmd.PersistentFlags().MarkHidden("add_dir_header")
-
-	// makes logs look nicer for a CLI app
-	_ = RootCmd.PersistentFlags().Set("skip_headers", "true")
-	_ = RootCmd.PersistentFlags().Set("logtostderr", "true")
-
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Path to the the clusterctl config file (default is $HOME/.clusterctl.yaml)")
+// AddDefaultMetalCTLCommands is a convenience function for adding all of the
+// default commands to metalctl
+func AddDefaultMetalCTLCommands(cmd *cobra.Command) *cobra.Command {
+	cmd.AddCommand(NewGenerateManifestCmd())
+	cmd.AddCommand(NewCoreComponentsCommand())
+	cmd.AddCommand(NewDeleteCommand())
+	ndc := NewDeployCommand()
+	cmd.AddCommand(ndc)
+	ndc.AddCommand(NewDeployProviderComponentsCommand())
+	ndc.AddCommand(NewDeployTargetClusterCmd())
+	return cmd
 }
 
 const Indentation = `  `
@@ -79,14 +66,6 @@ func LongDesc(s string) string {
 		return s
 	}
 	return normalizer{s}.heredoc().trim().string
-}
-
-// Examples normalizes a command's examples to follow the conventions.
-func Examples(s string) string {
-	if len(s) == 0 {
-		return s
-	}
-	return normalizer{s}.trim().indent().string
 }
 
 type normalizer struct {
@@ -100,17 +79,5 @@ func (s normalizer) heredoc() normalizer {
 
 func (s normalizer) trim() normalizer {
 	s.string = strings.TrimSpace(s.string)
-	return s
-}
-
-func (s normalizer) indent() normalizer {
-	splitLines := strings.Split(s.string, "\n")
-	indentedLines := make([]string, 0, len(splitLines))
-	for _, line := range splitLines {
-		trimmed := strings.TrimSpace(line)
-		indented := Indentation + trimmed
-		indentedLines = append(indentedLines, indented)
-	}
-	s.string = strings.Join(indentedLines, "\n")
 	return s
 }

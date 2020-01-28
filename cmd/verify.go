@@ -25,12 +25,12 @@ import (
 var verifyCmd = &cobra.Command{
 	Use:   "verify",
 	Short: "TODO",
-	Long: `TODO`,
+	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("verify called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(verifyCmd)
+	//RootCmd.AddCommand(verifyCmd)
 }

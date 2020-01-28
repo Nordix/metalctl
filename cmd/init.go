@@ -32,7 +32,7 @@ type initOptions struct {
 	watchingNamespace       string
 }
 
-var io = &initOptions{}
+var ino = &initOptions{}
 
 var initCmd = &cobra.Command{
 	Use:   "init",
@@ -53,22 +53,19 @@ var initCmd = &cobra.Command{
 
 		See https://cluster-api.sigs.k8s.io/ for more details.`),
 
-	Example: Examples(``),
-
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return runInit()
 	},
 }
 
 func init() {
-	initCmd.Flags().StringVarP(&io.kubeconfig, "kubeconfig", "", "", "Path to the kubeconfig file to use for accessing the management cluster. If empty, default rules for kubeconfig discovery will be used")
-	initCmd.Flags().StringVarP(&io.coreProvider, "core", "", "", "Core provider version (e.g. cluster-api:v0.3.0) to add to the management cluster. By default (empty), the cluster-api core provider's latest release is used")
-	initCmd.Flags().StringSliceVarP(&io.infrastructureProviders, "infrastructure", "i", nil, "Infrastructure providers and versions (e.g. aws:v0.5.0) to add to the management cluster")
-	initCmd.Flags().StringSliceVarP(&io.bootstrapProviders, "bootstrap", "b", nil, "Bootstrap providers and versions (e.g. kubeadm-bootstrap:v0.3.0) to add to the management cluster. By default (empty), the kubeadm bootstrap provider's latest release is used")
-	initCmd.Flags().StringVarP(&io.targetNamespace, "target-namespace", "", "", "The target namespace where the providers should be deployed. If not specified, each provider will be installed in a provider's default namespace")
-	initCmd.Flags().StringVarP(&io.watchingNamespace, "watching-namespace", "", "", "Namespace that the providers should watch to reconcile Cluster API objects. If unspecified, the providers watches for Cluster API objects across all namespaces")
+	initCmd.Flags().StringVarP(&ino.kubeconfig, "kubeconfig", "", "", "Path to the kubeconfig file to use for accessing the management cluster. If empty, default rules for kubeconfig discovery will be used")
+	initCmd.Flags().StringVarP(&ino.coreProvider, "core", "", "", "Core provider version (e.g. cluster-api:v0.3.0) to add to the management cluster. By default (empty), the cluster-api core provider's latest release is used")
+	initCmd.Flags().StringSliceVarP(&ino.infrastructureProviders, "infrastructure", "i", nil, "Infrastructure providers and versions (e.g. aws:v0.5.0) to add to the management cluster")
+	initCmd.Flags().StringSliceVarP(&ino.bootstrapProviders, "bootstrap", "b", nil, "Bootstrap providers and versions (e.g. kubeadm-bootstrap:v0.3.0) to add to the management cluster. By default (empty), the kubeadm bootstrap provider's latest release is used")
+	initCmd.Flags().StringVarP(&ino.targetNamespace, "target-namespace", "", "", "The target namespace where the providers should be deployed. If not specified, each provider will be installed in a provider's default namespace")
+	initCmd.Flags().StringVarP(&ino.watchingNamespace, "watching-namespace", "", "", "Namespace that the providers should watch to reconcile Cluster API objects. If unspecified, the providers watches for Cluster API objects across all namespaces")
 
-	RootCmd.AddCommand(initCmd)
 }
 
 func runInit() error {
@@ -80,12 +77,12 @@ func runInit() error {
 	fmt.Println("performing init...")
 
 	componentList, firstExecution, err := c.Init(client.InitOptions{
-		Kubeconfig:              io.kubeconfig,
-		CoreProvider:            io.coreProvider,
-		BootstrapProviders:      io.bootstrapProviders,
-		InfrastructureProviders: io.infrastructureProviders,
-		TargetNameSpace:         io.targetNamespace,
-		WatchingNamespace:       io.watchingNamespace,
+		Kubeconfig:              ino.kubeconfig,
+		CoreProvider:            ino.coreProvider,
+		BootstrapProviders:      ino.bootstrapProviders,
+		InfrastructureProviders: ino.infrastructureProviders,
+		TargetNameSpace:         ino.targetNamespace,
+		WatchingNamespace:       ino.watchingNamespace,
 	})
 	if err != nil {
 		return err

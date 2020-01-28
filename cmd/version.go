@@ -49,7 +49,7 @@ var versionCmd = &cobra.Command{
 func init() {
 	versionCmd.Flags().StringVarP(&vo.output, "output", "o", "", "Output format; available options are 'yaml', 'json' and 'short'")
 
-	RootCmd.AddCommand(versionCmd)
+	//RootCmd.AddCommand(versionCmd)
 }
 
 func runVersion() error {
