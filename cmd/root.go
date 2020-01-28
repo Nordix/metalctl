@@ -18,7 +18,6 @@ package cmd
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"strings"
 
@@ -30,17 +29,17 @@ import (
 var cfgFile string
 
 var RootCmd = &cobra.Command{
-	Use:   "metalctl",
-	Short: "metalctl controls a management cluster for Cluster API",
+	Use:          "metalctl",
+	SilenceUsage: true,
+	Short:        "metalctl controls a management cluster and move to target cluster",
 	Long: LongDesc(`
-		Using metactl for initializing management cluster`),
+		Get started with Cluster API using metalctl for initializing a management cluster by installing
+		CAPI+CAPBM+BMO  providers, and then use clusterctl for creating yaml templates for your workload clusters
+		ande deploy them. After that pivot from management cluster to targer cluster`),
 }
 
 func Execute() {
 	if err := RootCmd.Execute(); err != nil {
-		//TODO: print error stack if log v>0
-		//TODO: print cmd help if validation error
-		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }

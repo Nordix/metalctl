@@ -20,7 +20,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"metalctl/pkg/client"
+	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client"
 )
 
 type initOptions struct {
@@ -30,15 +30,28 @@ type initOptions struct {
 	infrastructureProviders []string
 	targetNamespace         string
 	watchingNamespace       string
-	force                   bool
 }
 
 var io = &initOptions{}
 
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize a management cluster with metal provider components",
-	Long: LongDesc(``),
+	Short: "Initialize a management cluster for Cluster API",
+	Long: LongDesc(`
+		Initialize a management cluster for Cluster API by installing Cluster API core components,
+		the kubeadm bootstrap provider, and the selected bootstrap and infrastructure providers.
+
+		The management cluster must be an existing Kubernetes cluster, and the identity used
+		for accessing the cluster must have enough privileges for installing Cluster API providers.
+
+		Use 'clusterctl config providers' to get the list of available providers; if necessary, edit
+		the $HOME/.cluster-api/clusterctl.yaml file to add new provider configurations or to customize existing ones.
+
+		Some providers require environment variables to be set before running clusterctl init; please
+		refer to the provider documentation or use 'clusterctl config provider [name]' to get the
+		list of required variables.
+
+		See https://cluster-api.sigs.k8s.io/ for more details.`),
 
 	Example: Examples(``),
 
@@ -49,12 +62,11 @@ var initCmd = &cobra.Command{
 
 func init() {
 	initCmd.Flags().StringVarP(&io.kubeconfig, "kubeconfig", "", "", "Path to the kubeconfig file to use for accessing the management cluster. If empty, default rules for kubeconfig discovery will be used")
-	initCmd.Flags().StringVarP(&io.coreProvider, "core", "", "", "Infrastructure providers to add to the management cluster. By default (empty), the cluster-api core provider is installed on the first init")
-	initCmd.Flags().StringSliceVarP(&io.infrastructureProviders, "infrastructure", "i", nil, "Infrastructure providers to add to the management cluster")
-	initCmd.Flags().StringSliceVarP(&io.bootstrapProviders, "bootstrap", "b", nil, "Bootstrap providers to add to the management cluster. By default (empty), the kubeadm bootstrap provider is installed on the first init")
+	initCmd.Flags().StringVarP(&io.coreProvider, "core", "", "", "Core provider version (e.g. cluster-api:v0.3.0) to add to the management cluster. By default (empty), the cluster-api core provider's latest release is used")
+	initCmd.Flags().StringSliceVarP(&io.infrastructureProviders, "infrastructure", "i", nil, "Infrastructure providers and versions (e.g. aws:v0.5.0) to add to the management cluster")
+	initCmd.Flags().StringSliceVarP(&io.bootstrapProviders, "bootstrap", "b", nil, "Bootstrap providers and versions (e.g. kubeadm-bootstrap:v0.3.0) to add to the management cluster. By default (empty), the kubeadm bootstrap provider's latest release is used")
 	initCmd.Flags().StringVarP(&io.targetNamespace, "target-namespace", "", "", "The target namespace where the providers should be deployed. If not specified, each provider will be installed in a provider's default namespace")
 	initCmd.Flags().StringVarP(&io.watchingNamespace, "watching-namespace", "", "", "Namespace that the providers should watch to reconcile Cluster API objects. If unspecified, the providers watches for Cluster API objects across all namespaces")
-	initCmd.Flags().BoolVarP(&io.force, "force", "f", false, "Force metalctl to skip preflight checks about supported configurations for a management cluster")
 
 	RootCmd.AddCommand(initCmd)
 }
@@ -74,7 +86,6 @@ func runInit() error {
 		InfrastructureProviders: io.infrastructureProviders,
 		TargetNameSpace:         io.targetNamespace,
 		WatchingNamespace:       io.watchingNamespace,
-		Force:                   io.force,
 	})
 	if err != nil {
 		return err

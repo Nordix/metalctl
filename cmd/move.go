@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Kubernetes Authors.
+Copyright © 2020 NAME HERE <EMAIL ADDRESS>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,46 +13,39 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 package cmd
 
 import (
-	"github.com/pkg/errors"
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-type moveOptions struct {
-	fromKubeconfig string
-	namespace      string
-	toKubeconfig   string
-}
-
-var mo = &moveOptions{}
-
+// moveCmd represents the move command
 var moveCmd = &cobra.Command{
 	Use:   "move",
-	Short: "Moves Cluster API objects (e.g. Cluster, Machines) from a management cluster to another management cluster",
-	Long: LongDesc(``),
+	Short: "A brief description of your command",
+	Long: `A longer description that spans multiple lines and likely contains examples
+and usage of using your command. For example:
 
-	Example: Examples(``),
-
-	RunE: func(cmd *cobra.Command, args []string) error {
-		if mo.toKubeconfig == "" {
-			return errors.New("please specify a target cluster using the --to flag")
-		}
-
-		return runMove()
+Cobra is a CLI library for Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("move called")
 	},
 }
 
 func init() {
-	moveCmd.Flags().StringVarP(&mo.fromKubeconfig, "kubeconfig", "", "", "Path to the kubeconfig file to use for accessing the originating management cluster. If empty, default rules for kubeconfig discovery will be used")
-	moveCmd.Flags().StringVarP(&mo.toKubeconfig, "to-kubeconfig", "", "", "Path to the kubeconfig file to use for accessing the target management cluster")
-	moveCmd.Flags().StringVarP(&mo.namespace, "namespace", "n", "", "The namespace where the objects describing the workload cluster exists. If not specified, the current namespace will be used")
-
 	RootCmd.AddCommand(moveCmd)
-}
 
-func runMove() error {
-	return nil
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// moveCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// moveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

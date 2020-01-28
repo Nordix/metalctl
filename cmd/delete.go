@@ -19,6 +19,7 @@ package cmd
 import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
+	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client"
 )
 
 type deleteOptions struct {
@@ -32,7 +33,7 @@ type deleteOptions struct {
 var dd = &deleteOptions{}
 
 var deleteCmd = &cobra.Command{
-	Use:   "delete [providers]",
+	Use:   "delete providers",
 	Short: "Deletes one or more providers from the management cluster",
 	Long: LongDesc(`
 		Deletes one or more providers from the management cluster.`),
@@ -53,7 +54,7 @@ var deleteCmd = &cobra.Command{
 }
 
 func init() {
-	deleteCmd.Flags().StringVarP(&dd.kubeconfig, "kubeconfig", "", "", "Path to the kubeconfig file to use for accessing the management cluster. If empty, default rules for kubeconfig discovery will be used")
+	deleteCmd.Flags().StringVarP(&dd.kubeconfig, "kubeconfig", "", "", "Path to the kubeconfig file")
 	deleteCmd.Flags().StringVarP(&dd.targetNamespace, "namespace", "", "", "The namespace where the provider to be deleted lives. If not specified, the namespace name will be inferred from the current configuration")
 
 	deleteCmd.Flags().BoolVarP(&dd.forceDeleteNamespace, "delete-namespace", "n", false, "Forces the deletion of the namespace where the providers are hosted (and of all the contained objects)")
@@ -64,5 +65,20 @@ func init() {
 }
 
 func runDelete(args []string) error {
+	c, err := client.New(cfgFile)
+	if err != nil {
+		return err
+	}
+
+	if err := c.Delete(client.DeleteOptions{
+		Kubeconfig:           dd.kubeconfig,
+		ForceDeleteNamespace: dd.forceDeleteNamespace,
+		ForceDeleteCRD:       dd.forceDeleteCRD,
+		Namespace:            dd.targetNamespace,
+		Providers:            args,
+	}); err != nil {
+		return err
+	}
+
 	return nil
 }

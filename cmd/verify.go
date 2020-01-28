@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Kubernetes Authors.
+Copyright © 2020 NAME HERE <EMAIL ADDRESS>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,19 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-package client
+package cmd
 
 import (
-	"metalctl/pkg/client/config"
-	"metalctl/pkg/client/repository"
+	"fmt"
+
+	"github.com/spf13/cobra"
 )
 
-// Alias creates local aliases for types defined in the low-level libraries.
-// By using a local alias, we ensure that users import and use clusterctl's high-level library.
+// verifyCmd represents the verify command
+var verifyCmd = &cobra.Command{
+	Use:   "verify",
+	Short: "TODO",
+	Long: `TODO`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("verify called")
+	},
+}
 
-// Provider defines a provider configuration.
-type Provider config.Provider
-
-// Components wraps a YAML file that defines the provider's components (CRD, controller, RBAC rules etc.)
-type Components repository.Components
+func init() {
+	RootCmd.AddCommand(verifyCmd)
+}
