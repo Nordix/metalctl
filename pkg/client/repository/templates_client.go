@@ -17,7 +17,7 @@ limitations under the License.
 package repository
 
 import (
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
+	"metalctl/pkg/client/config"
 )
 
 // TemplateOptions defines a set of well-know variables that all the cluster templates are expected to manage;

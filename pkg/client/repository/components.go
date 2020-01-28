@@ -27,10 +27,10 @@ import (
 	rbacv1 "k8s.io/api/rbac/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	clusterctlv1 "sigs.k8s.io/cluster-api/cmd/clusterctl/api/v1alpha3"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/scheme"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/util"
+	clusterctlv1 "metalctl/api/v1alpha3"
+	"metalctl/pkg/client/config"
+	"metalctl/pkg/internal/scheme"
+	"metalctl/pkg/internal/util"
 )
 
 // variableRegEx defines the regexp used for searching variables inside a YAML

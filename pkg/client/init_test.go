@@ -20,10 +20,10 @@ import (
 	"fmt"
 	"testing"
 
-	clusterctlv1 "sigs.k8s.io/cluster-api/cmd/clusterctl/api/v1alpha3"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/test"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/util"
+	clusterctlv1 "metalctl/api/v1alpha3"
+	"metalctl/pkg/client/config"
+	"metalctl/pkg/internal/test"
+	"metalctl/pkg/internal/util"
 )
 
 func Test_clusterctlClient_Init(t *testing.T) {

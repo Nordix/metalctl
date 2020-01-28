@@ -18,9 +18,9 @@ package client
 
 import (
 	"github.com/pkg/errors"
-	clusterctlv1 "sigs.k8s.io/cluster-api/cmd/clusterctl/api/v1alpha3"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/cluster"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
+	clusterctlv1 "metalctl/api/v1alpha3"
+	"metalctl/pkg/client/cluster"
+	"metalctl/pkg/client/config"
 )
 
 // Init initializes a management cluster by adding the requested list of providers.

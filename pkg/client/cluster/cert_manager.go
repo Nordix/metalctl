@@ -24,8 +24,8 @@ import (
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/klog"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/util"
+	"metalctl/config"
+	"metalctl/pkg/internal/util"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 

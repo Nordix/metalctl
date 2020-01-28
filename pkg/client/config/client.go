@@ -18,7 +18,7 @@ package config
 
 import (
 	"github.com/pkg/errors"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/test"
+	"metalctl/pkg/internal/test"
 )
 
 // Client is used to interact with the clusterctl configurations.

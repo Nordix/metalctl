@@ -19,7 +19,7 @@ package cluster
 import (
 	"github.com/pkg/errors"
 	"k8s.io/klog"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/repository"
+	"metalctl/pkg/client/repository"
 )
 
 // ProviderInstaller defines methods for enforcing consistency rules for provider installation.

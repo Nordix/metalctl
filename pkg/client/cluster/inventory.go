@@ -22,9 +22,9 @@ import (
 	apimeta "k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/util/sets"
 	"k8s.io/klog"
-	clusterctlv1 "sigs.k8s.io/cluster-api/cmd/clusterctl/api/v1alpha3"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/util"
+	clusterctlv1 "metalctl/api/v1alpha3"
+	"metalctl/config"
+	"metalctl/pkg/internal/util"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 

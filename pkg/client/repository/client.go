@@ -24,8 +24,8 @@ import (
 
 	"github.com/pkg/errors"
 	"k8s.io/client-go/util/homedir"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/test"
+	"metalctl/pkg/client/config"
+	"metalctl/pkg/internal/test"
 )
 
 // Client is used to interact with provider repositories.

@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	"github.com/Nordix/metalctl/cmd"
+	"metalctl/cmd"
 )
 
 func main() {

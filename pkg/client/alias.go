@@ -17,8 +17,8 @@ limitations under the License.
 package client
 
 import (
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/repository"
+	"metalctl/pkg/client/config"
+	"metalctl/pkg/client/repository"
 )
 
 // Alias creates local aliases for types defined in the low-level libraries.

@@ -17,7 +17,7 @@ limitations under the License.
 package repository
 
 import (
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
+	"metalctl/pkg/client/config"
 )
 
 // Template wraps a YAML file that defines the cluster objects (Cluster, Machines etc.).

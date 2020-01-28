@@ -1,5 +1,0 @@
-resources:
- - baremetal.yaml
- - tiller.yaml
- - argo.yaml
- - initially_ignored.yaml

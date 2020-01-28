@@ -30,11 +30,10 @@ import (
 var cfgFile string
 
 var RootCmd = &cobra.Command{
-	Use:   "clusterctl",
-	Short: "clusterctl controls a management cluster for Cluster API",
+	Use:   "metalctl",
+	Short: "metalctl controls a management cluster for Cluster API",
 	Long: LongDesc(`
-		Get started with Cluster API using clusterctl for initializing a management cluster by installing
-		Cluster API providers, and then use clusterctl for creating yaml templates for your workload clusters.`),
+		Using metactl for initializing management cluster`),
 }
 
 func Execute() {

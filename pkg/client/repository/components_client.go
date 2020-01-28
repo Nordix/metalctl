@@ -18,7 +18,7 @@ package repository
 
 import (
 	"github.com/pkg/errors"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
+	"metalctl/pkg/client/config"
 )
 
 // ComponentsClient has methods to work with yaml file for generating provider components.

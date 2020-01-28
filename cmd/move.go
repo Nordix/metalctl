@@ -32,14 +32,9 @@ var mo = &moveOptions{}
 var moveCmd = &cobra.Command{
 	Use:   "move",
 	Short: "Moves Cluster API objects (e.g. Cluster, Machines) from a management cluster to another management cluster",
-	Long: LongDesc(`
-		Moves Cluster API objects (e.g. Cluster, Machines) from a management cluster to another management cluster.
+	Long: LongDesc(``),
 
-		The target cluster must have all the required provider components already installed.`),
-
-	Example: Examples(`
-		# Moves Cluster API objects from cluster to the target cluster.
-		clusterctl move --to-kubeconfig=target-kubeconfig.yaml`),
+	Example: Examples(``),
 
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if mo.toKubeconfig == "" {

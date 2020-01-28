@@ -25,9 +25,9 @@ import (
 	"testing"
 
 	"github.com/google/go-github/github"
-	clusterctlv1 "sigs.k8s.io/cluster-api/cmd/clusterctl/api/v1alpha3"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/test"
+	clusterctlv1 "metalctl/api/v1alpha3"
+	"metalctl/pkg/client/config"
+	"metalctl/pkg/internal/test"
 )
 
 //TODO: test newGitHubRepository

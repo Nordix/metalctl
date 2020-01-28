@@ -16,7 +16,7 @@ limitations under the License.
 
 package config
 
-import "sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/test"
+import "metalctl/pkg/internal/test"
 
 // VariablesClient has methods to work with environment variables and with variables defined in the clusterctl configuration file.
 type VariablesClient interface {

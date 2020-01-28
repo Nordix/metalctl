@@ -19,7 +19,7 @@ package cluster
 import (
 	"context"
 
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/test"
+	"metalctl/pkg/internal/test"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 

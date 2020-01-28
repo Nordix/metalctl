@@ -21,11 +21,11 @@ import (
 
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/runtime"
-	clusterctlv1 "sigs.k8s.io/cluster-api/cmd/clusterctl/api/v1alpha3"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/cluster"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/repository"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/internal/test"
+	clusterctlv1 "metalctl/api/v1alpha3"
+	"metalctl/pkg/client/cluster"
+	"metalctl/pkg/client/config"
+	"metalctl/pkg/client/repository"
+	"metalctl/pkg/internal/test"
 )
 
 // dummy test to document fakeClient usage

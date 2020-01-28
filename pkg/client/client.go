@@ -17,9 +17,9 @@ limitations under the License.
 package client
 
 import (
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/cluster"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/repository"
+	"metalctl/pkg/client/cluster"
+	"metalctl/pkg/client/config"
+	"metalctl/pkg/client/repository"
 )
 
 // InitOptions carries the options supported by Init

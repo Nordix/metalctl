@@ -37,39 +37,7 @@ var deleteCmd = &cobra.Command{
 	Long: LongDesc(`
 		Deletes one or more providers from the management cluster.`),
 
-	Example: Examples(`
-		# Deletes the AWS provider
-		# Please note that this implies the deletion of all provider components except the hosting namespace
-		# and the CRDs.
-		clusterctl delete aws
- 
-		# Deletes the instance of the AWS provider hosted in the "foo" namespace
-		# Please note, if there are multiple instances of the AWS provider installed in the cluster,
-		# global/shared resources (e.g. ClusterRoles), are not deleted in order to preserve
-		# the functioning of the remaining instances.
-		clusterctl delete aws --namespace=foo
-
-		# Deletes all the providers
-		# Important! As a consequence of this operation, all the corresponding resources managed by
-		# Cluster API Providers are orphaned and there might be ongoing costs incurred as a result of this.
-		clusterctl delete --all
-
-		# Delete the AWS provider and related CRDs. Please note that this forces deletion of 
-		# all the related objects (e.g. AWSClusters, AWSMachines etc.).
-		# Important! As a consequence of this operation, all the corresponding resources managed by
-		# the AWS infrastructure provider are orphaned and there might be ongoing costs incurred as a result of this.
-		clusterctl delete aws --delete-crd
-
-		# Delete the AWS provider and its hosting Namespace. Please note that this forces deletion of 
-		# all objects existing in the namespace. 
-		# Important! As a consequence of this operation, all the corresponding resources managed by
-		# Cluster API Providers are orphaned and there might be ongoing costs incurred as a result of this.
-		clusterctl delete aws --delete-namespace
-
-		# Reset the management cluster to its original state
-		# Important! As a consequence of this operation all the corresponding resources on target clouds
-		# are "orphaned" and thus there may be ongoing costs incurred as a result of this.
-		clusterctl delete --all --delete-crd  --delete-namespace`),
+	Example: Examples(``),
 
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if dd.deleteAll && len(args) > 0 {

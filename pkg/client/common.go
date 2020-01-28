@@ -21,7 +21,7 @@ import (
 
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/util/validation"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/repository"
+	"metalctl/pkg/client/repository"
 )
 
 // getComponentsByName is a utility method that returns components for a given provider, targetNamespace, and watchingNamespace.

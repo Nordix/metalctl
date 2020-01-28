@@ -29,7 +29,7 @@ import (
 	"golang.org/x/oauth2"
 	"k8s.io/apimachinery/pkg/util/version"
 	"k8s.io/klog"
-	"sigs.k8s.io/cluster-api/cmd/clusterctl/pkg/client/config"
+	"metalctl/pkg/client/config"
 )
 
 const (
