@@ -30,7 +30,3 @@ var scaleCmd = &cobra.Command{
 		fmt.Println("scale called")
 	},
 }
-
-func init() {
-	//RootCmd.AddCommand(scaleCmd)
-}

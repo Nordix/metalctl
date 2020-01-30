@@ -21,19 +21,28 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type generateOptions struct {
+type generateTargetOptions struct {
 	configPath string
+	outputPath string
 }
 
-var gi = &generateOptions{}
-
 // generateTargetCrsCmd represents the generateTargetCrs command
-var generateTargetCrsCmd = &cobra.Command{
-	Use:   "generateTargetCrs",
-	Args:  cobra.ExactArgs(1),
-	Short: "Generates target CRs",
-	Long:  `Generates target CRs by rendering kustomization templates, input is path to the template folder`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("generateTargetCrs called")
-	},
+func NewGenerateTargetManifestCmd() *cobra.Command {
+	gopts := &generateTargetOptions{}
+	generateTargetCrsCmd := &cobra.Command{
+		Use:   "generateTargetCrs",
+		Args:  cobra.ExactArgs(1),
+		Short: "Generates target CRs",
+		Long:  `Generates target CRs by rendering kustomization templates, input is path to the template folder`,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			fmt.Println("generateTargetCrs called")
+			return gopts.RunGenerateTarget()
+		},
+	}
+	return generateTargetCrsCmd
+}
+
+// RunGenrate creates manifests
+func (gopts *generateTargetOptions) RunGenerateTarget() error {
+	return nil
 }
