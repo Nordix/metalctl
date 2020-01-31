@@ -43,7 +43,7 @@ func (o *generateOptions) runGenerate() error {
 		return err
 	}
 
-	fmt.Println("performing generate...")
+	fmt.Println("Generating manifests...")
 
 	c.Generate(client.GenerateOptions{
 		SourcePath: o.sourcePath,

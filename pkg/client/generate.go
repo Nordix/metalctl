@@ -1,14 +1,10 @@
 package client
 
 import (
-	"errors"
-	"log"
-	"metalctl/pkg/build"
 	"path/filepath"
 	"strings"
 
 	"sigs.k8s.io/kustomize/api/filesys"
-	"sigs.k8s.io/kustomize/api/konfig"
 	"sigs.k8s.io/kustomize/api/krusty"
 	"sigs.k8s.io/kustomize/api/resmap"
 	"sigs.k8s.io/kustomize/api/resource"
@@ -28,31 +24,18 @@ func (c *metalctlClient) Generate(options GenerateOptions) error {
 	if err != nil {
 		return err
 	}
-	emitResources(options.OutputPath, fSys, m)
-	return nil
-}
-
-// Validate command
-func (o *GenOptions) Validate(args []string) (err error) {
-	if len(args) > 2 {
-		return errors.New(
-			"specify one path to " +
-				konfig.DefaultKustomizationFileName() + "and output directory")
-	}
-	err = build.ValidateFlagLoadRestrictor()
-	if err != nil {
-		return err
-	}
+	writeResources(options.OutputPath, fSys, m)
 	return nil
 }
 
 func makeOptions() *krusty.Options {
 	opts := &krusty.Options{
 		DoLegacyResourceSort: true,
-		LoadRestrictions:     build.GetFlagLoadRestrictorValue(),
+		LoadRestrictions:     0,
 		DoPrune:              false,
 	}
-	if build.IsFlagEnablePluginsSet() {
+	// TODO analyse if we want to use plugin usability control logic
+	/* 	if build.IsFlagEnablePluginsSet() {
 		c, err := konfig.EnabledPluginConfig()
 		if err != nil {
 			log.Fatal(err)
@@ -60,11 +43,11 @@ func makeOptions() *krusty.Options {
 		opts.PluginConfig = c
 	} else {
 		opts.PluginConfig = konfig.DisabledPluginConfig()
-	}
+	} */
 	return opts
 }
 
-func emitResources(
+func writeResources(
 	outputPath string, fSys filesys.FileSystem, m resmap.ResMap) error {
 	if outputPath != "" && fSys.IsDir(outputPath) {
 		return writeIndividualFiles(fSys, outputPath, m)
