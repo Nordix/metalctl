@@ -1,39 +1,58 @@
 package cmd
 
 import (
+	"fmt"
+	"metalctl/pkg/client"
 	"metalctl/pkg/utils"
+
 	"github.com/spf13/cobra"
 )
 
-type Options struct {
-	sourcePath string
-	outputPath string
-}
-
 // NewDeployTargetClusterCmd represents the deployTargetCluster command
 func NewGenerateManifestCmd() *cobra.Command {
-	o := &Options{}
+	o := &client.GenerateOptions{}
 	generateManifestCmd := &cobra.Command{
 		Use:   "generate-manifest",
 		Short: "Generate manifests",
 		Long: utils.LongDesc(`
 				TODO`),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return o.RunBuild()
+			return runGenerate(o)
 		},
 	}
-	o.initFlags(generateManifestCmd)
+	initFlags(o, generateManifestCmd)
 	return generateManifestCmd
 }
 
-func (o *Options) initFlags(cmd *cobra.Command) {
+func initFlags(o *client.GenerateOptions, cmd *cobra.Command) {
 	flags := cmd.Flags()
-	flags.StringVar(&o.sourcePath, "sourcePath", "", "TODO")
-	cmd.MarkFlagRequired("sourcePath")
-	flags.StringVar(&o.outputPath, "outputPath", "", "TODO")
-	cmd.MarkFlagRequired("outputPath")
+	//TODO: define defaults when complete architecture is clearer
+	flags.StringVar(&o.SourcePath, "sourcePath", "source", "TODO")
+	flags.StringVar(&o.OutputPath, "outputPath", "/tmp/manifests", "TODO")
+	flags.StringVar(&o.Basepath, "basePath", "/baseresourcesexamples", "TODO")
+	flags.StringVar(&o.GeneratePath, "generatePath", "/tmp/templates", "TODO")
+	flags.StringVar(&o.KustomizePath, "kustomizePath", "/baseresourcesexamples/rbac", "TODO")
+	flags.StringVar(&o.FileSystemType, "filesystemtype", "internal", "TODO")
 }
 
-func (o *Options) RunBuild() error {
+func runGenerate(o *client.GenerateOptions) error {
+	c, err := client.New(cfgFile)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Generating manifests...")
+
+	err = c.Generate(client.GenerateOptions{
+		SourcePath:     o.SourcePath,
+		OutputPath:     o.OutputPath,
+		Basepath:       o.Basepath,
+		GeneratePath:   o.GeneratePath,
+		KustomizePath:  o.KustomizePath,
+		FileSystemType: o.FileSystemType,
+	})
+	if err != nil {
+		return err
+	}
 	return nil
 }
